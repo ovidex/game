@@ -1411,10 +1411,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1555792970 source:c:\users\ovi games\desktop\game-master\sdl2_test\tester.cpp
+1555795992 source:c:\users\ovi games\desktop\game-master\sdl2_test\tester.cpp
 	"window.h"
 
-1555794377 c:\users\ovi games\desktop\game-master\sdl2_test\window.h
+1555795602 c:\users\ovi games\desktop\game-master\sdl2_test\window.h
 	"drawable.h"
 	"runnable.h"
 	<SDL2/SDL.h>
@@ -1422,7 +1422,7 @@
 	<stdio.h>
 	<string>
 
-1555794189 c:\users\ovi games\desktop\game-master\sdl2_test\drawable.h
+1555795835 c:\users\ovi games\desktop\game-master\sdl2_test\drawable.h
 
-1555794356 c:\users\ovi games\desktop\game-master\sdl2_test\runnable.h
+1555795835 c:\users\ovi games\desktop\game-master\sdl2_test\runnable.h
 

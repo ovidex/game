@@ -1,6 +1,6 @@
 #pragma once
-//#include "drawable.h"
-//#include "runnable.h"
+#include "drawable.h"
+#include "runnable.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
@@ -14,7 +14,7 @@ public:
     SDL_Renderer* gRendererx;
     Window()
     {
-        gWindowx = NULL;
+gWindowx = NULL;
         gRendererx = NULL;
     }
 
