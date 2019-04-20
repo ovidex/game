@@ -2,6 +2,6 @@
 class Runnable
  {
   public:
-    virtual void is_running() const = 0; //draw to GraphicalDrawingBoard
+    virtual bool is_running() = 0;
  };
 
