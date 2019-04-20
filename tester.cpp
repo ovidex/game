@@ -6,14 +6,14 @@ int main(int argc, char *args[])
     SDL_Renderer *gRenderer;
 
     //Start up SDL and create window
-    int ret = sdl::init(&gWindow, &gRenderer);
+    int ret = Window::init(&gWindow, &gRenderer);
     if (ret < 0)
     {
         fprintf(stderr, "Failed to initialize: %d!\n", ret);
         return -1;
     }
 
-    SDL_Texture *gTexture = sdl::load_texture("i-love-c.png", gRenderer);
+    SDL_Texture *gTexture = Window::load_texture("i-love-c.png", gRenderer);
 
     //Load media
     if (!gTexture)
@@ -34,7 +34,7 @@ int main(int argc, char *args[])
     SDL_Event e;
 
     //While application is running
-    while (!quit)
+    while (Window::is_running(quit))
     {
         //Handle events on queue
         while (SDL_PollEvent(&e) != 0)
@@ -45,19 +45,12 @@ int main(int argc, char *args[])
                 quit = true;
             }
         }
+        Window::draw(gRenderer,gTexture);
 
-        //Clear screen
-        SDL_RenderClear(gRenderer);
-
-        //Render texture to screen
-        SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-
-        //Update screen
-        SDL_RenderPresent(gRenderer);
     }
 
     //close SDL
-    sdl::cleanup();
+    Window::cleanup();
 
     //Free loaded image
     SDL_DestroyTexture(gTexture);
