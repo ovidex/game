@@ -1,19 +1,26 @@
 #pragma once
-
+//#include "drawable.h"
+//#include "runnable.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
- const int SCREEN_WIDTH = 640;
-    const int SCREEN_HEIGHT = 480;
-class Window
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+class Window: public Drawable, public Runnable
 {
-    Window() {}
-//Screen dimension constants
+public:
+    SDL_Window* gWindowx ;
+    SDL_Renderer* gRendererx;
+    Window()
+    {
+        gWindowx = NULL;
+        gRendererx = NULL;
+    }
 
 
-// init sdl and create gWindow and gRenderer
-    int init(SDL_Window **gWindow, SDL_Renderer **gRenderer)
+// init sdl and create gWindowx and gRendererx
+    int init(SDL_Window **gWindowx, SDL_Renderer **gRendererx)
     {
         //Initialize SDL
         if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -28,22 +35,22 @@ class Window
         }
 
         //Create window
-        *gWindow = SDL_CreateWindow("SDL window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (*gWindow == NULL)
+        *gWindowx = SDL_CreateWindow("SDL window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if (*gWindowx == NULL)
         {
             fprintf(stderr, "Window could not be created! SDL Error: %s\n", SDL_GetError());
             return -2;
         }
 
         //Create renderer for window
-        *gRenderer = SDL_CreateRenderer(*gWindow, -1, SDL_RENDERER_ACCELERATED);
-        if (*gRenderer == NULL)
+        *gRendererx = SDL_CreateRenderer(*gWindowx, -1, SDL_RENDERER_ACCELERATED);
+        if (*gRendererx == NULL)
         {
             fprintf(stderr, "Renderer could not be created! SDL Error: %s\n", SDL_GetError());
             return -3;
         }
         //Initialize renderer color
-        SDL_SetRenderDrawColor(*gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_SetRenderDrawColor(*gRendererx, 0xFF, 0xFF, 0xFF, 0xFF);
 
         //Initialize PNG loading
         int imgFlags = IMG_INIT_PNG;
@@ -56,8 +63,8 @@ class Window
         return 0;
     }
 
-// load a texture from path using gRenderer (returned from init!!!)
-    SDL_Texture *load_texture(const std::string &path, SDL_Renderer *gRenderer)
+// load a texture from path using gRendererx (returned from init!!!)
+    SDL_Texture *load_texture(const std::string &path, SDL_Renderer *gRendererx)
     {
         //The final texture
         SDL_Texture *newTexture = NULL;
@@ -70,7 +77,7 @@ class Window
             return NULL;
         }
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(gRendererx, loadedSurface);
         if (newTexture == NULL)
         {
             fprintf(stderr, "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -90,19 +97,21 @@ class Window
         IMG_Quit();
         SDL_Quit();
     }
-    void is_running(bool quit)
+    bool is_running(bool quit)
     {
-        return !quit;
+        if(quit==false)
+            return true;
+        return false;
     }
-    void draw(SDL_Renderer *gRenderer,SDL_Texture *gTexture)
+    void draw(SDL_Renderer *gRendererx,SDL_Texture *gTexture)
     {
 //Clear screen
-        SDL_RenderClear(gRenderer);
+        SDL_RenderClear(gRendererx);
 
         //Render texture to screen
-        SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+        SDL_RenderCopy(gRendererx, gTexture, NULL, NULL);
 
         //Update screen
-        SDL_RenderPresent(gRenderer);
+        SDL_RenderPresent(gRendererx);
     }
 };

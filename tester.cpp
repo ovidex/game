@@ -1,19 +1,19 @@
 #include "window.h"
 
 int main(int argc, char *args[])
-{
-    SDL_Window *gWindow;
-    SDL_Renderer *gRenderer;
-
+{Window wind;
+Window();
+     SDL_Window* gWindow ;
+    SDL_Renderer* gRenderer;
     //Start up SDL and create window
-    int ret = Window::init(&gWindow, &gRenderer);
+    int ret = wind.init(&gWindow, &gRenderer);
     if (ret < 0)
     {
         fprintf(stderr, "Failed to initialize: %d!\n", ret);
         return -1;
     }
 
-    SDL_Texture *gTexture = Window::load_texture("i-love-c.png", gRenderer);
+    SDL_Texture *gTexture = wind.load_texture("i-love-c.png", gRenderer);
 
     //Load media
     if (!gTexture)
@@ -34,7 +34,7 @@ int main(int argc, char *args[])
     SDL_Event e;
 
     //While application is running
-    while (Window::is_running(quit))
+    while (wind.is_running(quit))
     {
         //Handle events on queue
         while (SDL_PollEvent(&e) != 0)
@@ -45,12 +45,12 @@ int main(int argc, char *args[])
                 quit = true;
             }
         }
-        Window::draw(gRenderer,gTexture);
+        wind.draw(gRenderer,gTexture);
 
     }
 
     //close SDL
-    Window::cleanup();
+    wind.cleanup();
 
     //Free loaded image
     SDL_DestroyTexture(gTexture);
